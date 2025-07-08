@@ -1,0 +1,8 @@
+google-cloud-speech>=2.21.0
+google-cloud-texttospeech>=2.16.0
+google-adk>=0.1.0
+python-dotenv>=1.0.0
+wave
+threading
+queue
+asyncio
