@@ -58,12 +58,6 @@ pip install google-adk
 ```
 
 3. **Set up Google Cloud credentials**:
-- Enable **Vertex AI API** in your Google Cloud project.
-- Authenticate using:
-```bash
-gcloud auth application-default login
-```
-- Make sure your `GOOGLE_APPLICATION_CREDENTIALS` environment variable points to your credentials JSON file.
 
 ---
 
