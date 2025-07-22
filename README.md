@@ -1,137 +1,173 @@
-Uzbek Conversational AI Agent
+# 🇺🇿 Uzbek Conversational AI Agent
 
-This project implements a simple yet effective conversational AI agent designed to interact with users in Uzbek for lead qualification or information gathering. Built using the Google Agent Development Kit (ADK) and powered by the gemini-2.0-flash-exp model, the agent follows a structured conversation flow, saves user responses, and handles various conversational scenarios including rejections and out-of-topic replies.
-Features
+A lightweight, structured conversational AI built with the [Google Agent Development Kit (ADK)](https://github.com/google/agent-development-kit) and powered by the **Gemini 2.0 Flash** model. This agent communicates **entirely in Uzbek**, conducts a multi-step dialogue, classifies user intent, and stores all session data for lead qualification, surveys, or information gathering.
 
-    Uzbek Language Support: The agent communicates entirely in Uzbek.
+---
 
-    Structured Conversation Flow: Guides users through a predefined sequence of questions.
+## 🚀 Features
 
-    Dynamic Response Handling: Categorizes user responses as positive (ha), negative (yoq), indecisive (ikkilanish), or out-of-topic (out_of_topic).
+- 🗣️ **Uzbek Language Support**  
+  Fully localized interaction in Uzbek for native communication.
 
-    Data Persistence: Saves conversation data (question, user answer, and label) to a CSV file for each unique session.
+- 🔁 **Structured Question Flow**  
+  Follows a predefined conversational path with customizable prompts.
 
-    Rejection Logic: Gracefully ends the conversation if the user declines participation at specific key points.
+- 🤖 **Intelligent Classification**  
+  Detects and labels user responses as:
+  - `ha` (positive)
+  - `yo‘q` (negative)
+  - `ikkilanish` (uncertain)
+  - `out_of_topic` (irrelevant)
 
-    Out-of-Topic Repetition: Repeats the current question if the user's response is irrelevant.
+- 🧠 **Rejection and Repetition Logic**  
+  Handles "no" responses gracefully and repeats questions if the user goes off-topic.
 
-    Scalable Architecture: Designed with the Google ADK for potential deployment in production environments.
+- 💾 **Data Persistence**  
+  Logs each session’s questions, user responses, and labels into a unique `.csv` file.
 
-Prerequisites
+- ⚙️ **Scalable ADK Architecture**  
+  Easily extendable and deployable via Google ADK.
 
-Before you begin, ensure you have the following installed:
+---
 
-    Python 3.9+
+## 🧱 Project Structure
 
-    Google Agent Development Kit (ADK):
-    You can install it via pip:
+```
+uzbek-ai-agent/
+├── agent.py                # Main agent script with flow logic and tools
+├── saving.py               # Utility for saving conversation data to CSV
+├── test.py                 # Unit tests for agent behavior
+└── README.md               # This documentation
+```
 
-    pip install google-adk
+---
 
-    Google Cloud Project and Credentials:
-    You'll need a Google Cloud project with the Vertex AI API enabled and authenticated credentials configured for your environment (e.g., via gcloud auth application-default login). The gemini-2.0-flash-exp model is accessed through Vertex AI.
+## 📦 Installation
 
-Project Structure
+> Ensure you are using **Python 3.9+**
 
-.
-├── agent.py
-├── saving.py
-└── test.py
-└── README.md
+1. **Clone the repository**:
+```bash
+git clone https://github.com/your-username/uzbek-ai-agent.git
+cd uzbek-ai-agent
+```
 
-    agent.py: Contains the core AI agent logic, including its instructions, defined questions, and the integration with the saving.py module via a FunctionTool. This is where the conversational flow and decision-making are defined.
+2. **Install dependencies**:
+```bash
+pip install google-adk
+```
 
-    saving.py: Provides a utility function (save_conversation_data_to_csv) responsible for persisting conversation data to CSV files. Each conversation session gets its own unique CSV file.
+3. **Set up Google Cloud credentials**:
+- Enable **Vertex AI API** in your Google Cloud project.
+- Authenticate using:
+```bash
+gcloud auth application-default login
+```
+- Make sure your `GOOGLE_APPLICATION_CREDENTIALS` environment variable points to your credentials JSON file.
 
-    test.py: Unit tests for the agent's conversational logic and its interaction with the saving module, using unittest.mock to simulate the ADK environment.
+---
 
-Installation
+## ▶️ Usage
 
-    Clone the repository:
+### 🔗 Web Interface
+Launch the agent using ADK’s web interface:
+```bash
+adk web agent.py
+```
+This will open a local browser window at `http://127.0.0.1:8000` or similar.
 
-    git clone https://github.com/your-username/uzbek-ai-agent.git
-    cd uzbek-ai-agent
+### 🖥️ CLI Interface
+Alternatively, run the agent directly in the terminal:
+```bash
+adk run agent.py
+```
 
-    (Replace your-username with your actual GitHub username or the repository URL.)
+---
 
-    Install dependencies:
+## 💬 Sample Conversation (Simulated)
 
-    pip install google-adk
+```text
+Agent: Assalomaleykum, men kompaniyadan qo'ng'iroq qiluvchi agentman. Loyihamizga qiziqish bildirgansiz. Suhbatlashishga vaqtingiz bormi?
+User: Ha, vaqtim bor.
+Agent: Ajoyib. Ismingizni bilsam bo'ladimi?
+User: Mening ismim Dilshod.
+Agent: Loyihamiz haqida mutaxassislarimizdan to'liq ma’lumot olishni xohlaysizmi?
+User: Ha, albatta!
+Agent: Qiziqishingiz uchun rahmat! Mutaxassislarimiz siz bilan tez orada bog'lanishadi.
+```
 
-    Note: saving.py uses standard Python libraries (csv, os, uuid) and doesn't require additional pip installations beyond the ADK.
+### ❌ Rejection Scenario
+```text
+User: Yo‘q, hozir vaqtim yo‘q.
+Agent: Suhbat uchun rahmat. Salomat bo‘ling!
+```
 
-Usage
+### ❓ Out-of-Topic Scenario
+```text
+User: Bugun havo qanday?
+Agent: Uzr, savolingiz mavzudan tashqarida. Savolni qaytaraman: Loyihamizga qiziqish bildirgansiz. Suhbatlashishga vaqtingiz bormi?
+```
 
-To run the agent, you typically use the ADK CLI. Ensure your Google Cloud credentials are set up and the Vertex AI API is enabled for your project.
+---
 
-    Navigate to the project directory:
+## 🧪 Testing
 
-    cd /path/to/your/uzbek-ai-agent
+Run unit tests to validate flow logic and saving behavior:
 
-    Run the agent using the ADK CLI:
+```bash
+python -m unittest test.py
+```
 
-    adk web agent.py
+The test cases simulate:
+- Valid user flows
+- Rejections
+- Out-of-topic responses
+- Data-saving integrity via mocks
 
-    This command will usually launch a local web UI in your browser (e.g., http://localhost:8000 or http://127.0.0.1:8000) where you can interact with your agent.
+---
 
-    Alternatively, for command-line interaction:
+## 🔧 Configuration
 
-    adk run agent.py
+You can customize the agent behavior by editing variables in `agent.py`:
 
-Example Conversation Flow (simulated):
+| Variable | Description |
+|----------|-------------|
+| `GREETING` | Initial welcome message |
+| `AGENT_QUESTIONS` | List of sequential questions |
+| `CSV_QUESTION_KEYS` | CSV column headers |
+| `OUT_OF_TOPIC_RESPONSE` | Message for irrelevant answers |
+| `REJECT_RESPONSE` | Exit message when user declines |
 
-Agent: "Assalomaleykum, men companiyadan qo'ng'iroq qiluvchi agentman. Malumbir loyihamizga qiziqish bildiribsiz, shu haqida gaplashishga vaqtingiz bormi?"
-User: "Ha, vaqtim bor."
-Agent: "Ajoyib, Hurmatli mijoz, ismingizni bilsam boladimi?."
-User: "Mening ismim Dilshod."
-Agent: "Ushbu loyihamiz haqida mutaxassislarimiz tomonidan to'liq ma'lumot olishni xohlaysizmi?"
-User: "Ha, albatta!"
-Agent: "Qiziqishingiz uchun rahmat! Mutaxassislarimiz siz bilan tez orada bog'lanishadi."
+To modify decision logic, update the `basic_agent` instructions accordingly.
 
-Rejection Scenario:
+---
 
-Agent: "Assalomaleykum, men companiyadan qo'ng'iroq qiluvchi agentman. Malumbir loyihamizga qiziqish bildiribsiz, shu haqida gaplashishga vaqtingiz bormi?"
-User: "Yo'q, vaqtim yo'q."
-Agent: "Suhbattingiz uchun rahmat, salomat bo'ling." (Conversation ends)
+## 📁 Data Output Format
 
-Out-of-Topic Scenario:
+Each session generates a CSV file named with a unique UUID, containing:
 
-Agent: "Assalomaleykum, men companiyadan qo'ng'iroq qiluvchi agentman. Malumbir loyihamizga qiziqish bildiribsiz, shu haqida gaplashishga vaqtingiz bormi?"
-User: "Bugun havo qanday?"
-Agent: "Uzr, javobingizga tushunmadim. Savolni qaytaraman. Malumbir loyihamizga qiziqish bildiribsiz, shu haqida gaplashishga vaqtingiz bormi?"
-Testing
+| Question | User Response | Label |
+|----------|----------------|-------|
+| "Ismingizni bilsam bo'ladimi?" | "Dilshod" | "ha" |
+| "Mutaxassislarimiz bilan suhbatlashishni xohlaysizmi?" | "Ha" | "ha" |
+| ... | ... | ... |
 
-The test.py file contains unit tests to verify the agent's logic without requiring a live ADK environment or a full LLM inference.
+---
 
-To run the tests:
+## 🤝 Contributing
 
-    Navigate to the project directory:
+Contributions are welcome! If you find bugs, have ideas, or want to extend functionality (e.g., adding audio support, advanced STT/TTS, or deployment on serverless), feel free to open an issue or submit a pull request.
 
-    cd /path/to/your/uzbek-ai-agent
+---
 
-    Run the test file using Python's unittest module:
+## 📄 License
 
-    python -m unittest test.py
+This project is open-sourced under the **MIT License**. See the `LICENSE` file for details.
 
-The tests will simulate various conversation paths, including successful flows, rejections, and out-of-topic responses, verifying that the agent behaves as expected and calls the save_conversation_data_to_csv function with the correct arguments.
-Configuration
+---
 
-You can easily modify the agent's behavior by editing the constants in agent.py:
+## 🙌 Acknowledgments
 
-    GREETING: The initial greeting message.
-
-    AGENT_QUESTIONS: The sequence of questions the agent asks.
-
-    CSV_QUESTION_KEYS: Corresponding keys for saving questions in the CSV.
-
-    OUT_OF_TOPIC_RESPONSE: The message for out-of-topic replies.
-
-    REJECT_RESPONSE: The message when a user rejects the conversation.
-
-For more complex changes to the conversational logic, you would adjust the instruction string within the basic_agent definition in agent.py.
-Contributing
-
-Contributions are welcome! Please feel free to open issues or submit pull requests.
-License
-
-This project is open-sourced under the MIT License. See the LICENSE file for more details.
+- [Google ADK](https://github.com/google/agent-development-kit) for the development framework
+- [Gemini by Google DeepMind](https://deepmind.google) for model power
+- All contributors and testers for their support
