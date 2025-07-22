@@ -160,14 +160,3 @@ Contributions are welcome! If you find bugs, have ideas, or want to extend funct
 
 ---
 
-## 📄 License
-
-This project is open-sourced under the **MIT License**. See the `LICENSE` file for details.
-
----
-
-## 🙌 Acknowledgments
-
-- [Google ADK](https://github.com/google/agent-development-kit) for the development framework
-- [Gemini by Google DeepMind](https://deepmind.google) for model power
-- All contributors and testers for their support
